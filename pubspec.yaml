@@ -1,0 +1,73 @@
+name: gitamarga
+description: "GitaMarga — The Path of the Gita. A multilingual Bhagavad Gita spiritual companion."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State management, routing, i18n
+  get: ^4.6.6
+
+  # HTTP
+  dio: ^5.7.0
+
+  # Local storage
+  shared_preferences: ^2.3.4
+
+  # Image caching
+  cached_network_image: ^3.4.1
+
+  # Sharing
+  share_plus: ^10.1.2
+
+  # Fonts
+  google_fonts: ^6.2.1
+
+  # Shimmer loading
+  shimmer: ^3.0.0
+
+  # Notifications
+  flutter_local_notifications: ^18.0.1
+
+  # Internationalization
+  intl: ^0.20.2
+
+  # SVG
+  flutter_svg: ^2.0.14
+
+  # Smooth page indicator
+  smooth_page_indicator: ^1.2.0+3
+
+  # Percent indicator
+  percent_indicator: ^4.2.3
+
+  # URL launcher
+  url_launcher: ^6.3.1
+  translator: ^1.0.4+1
+  flutter_tts: ^4.2.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/data/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.jpg"
