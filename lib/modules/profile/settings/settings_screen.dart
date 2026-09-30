@@ -269,7 +269,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 32),
               Center(
                 child: Text(
-                  'GitaMarga v1.0.0  •  Read. Understand. Practice.',
+                  'GitaMarga v1.0.0  •  Read. Understand.',
                   style: AppTextStyles.bodySmall(
                     color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiaryLight,
                   ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../home/home_screen.dart';
 import '../gita/chapters_screen.dart';
-import '../practice/practice_screen.dart';
 import '../explore/explore_screen.dart';
 import '../profile/profile_screen.dart';
 import '../../core/theme/app_colors.dart';
@@ -21,7 +20,6 @@ class _ShellScreenState extends State<ShellScreen> {
   static const List<Widget> _pages = [
     HomeScreen(),
     ChaptersScreen(),
-    PracticeScreen(),
     ExploreScreen(),
     ProfileScreen(),
   ];
@@ -78,25 +76,18 @@ class _ShellScreenState extends State<ShellScreen> {
                   onTap: () => setState(() => _currentIndex = 1),
                 ),
                 _NavItem(
-                  icon: Icons.self_improvement_rounded,
-                  label: 'nav_practice'.tr,
+                  icon: Icons.explore_rounded,
+                  label: 'nav_explore'.tr,
                   index: 2,
                   currentIndex: _currentIndex,
                   onTap: () => setState(() => _currentIndex = 2),
                 ),
                 _NavItem(
-                  icon: Icons.explore_rounded,
-                  label: 'nav_explore'.tr,
+                  icon: Icons.person_rounded,
+                  label: 'nav_profile'.tr,
                   index: 3,
                   currentIndex: _currentIndex,
                   onTap: () => setState(() => _currentIndex = 3),
-                ),
-                _NavItem(
-                  icon: Icons.person_rounded,
-                  label: 'nav_profile'.tr,
-                  index: 4,
-                  currentIndex: _currentIndex,
-                  onTap: () => setState(() => _currentIndex = 4),
                 ),
               ],
             ),

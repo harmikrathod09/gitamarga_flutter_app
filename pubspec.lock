@@ -773,6 +773,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
+  tithi_engine:
+    dependency: "direct main"
+    description:
+      name: tithi_engine
+      sha256: e3da8bc45e0a48eda02d346698243d9b61636fb6129a472e4c5f0b499ea6145b
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
   translator:
     dependency: "direct main"
     description:

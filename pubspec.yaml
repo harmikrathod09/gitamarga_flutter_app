@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.1
   translator: ^1.0.4+1
   flutter_tts: ^4.2.5
+  tithi_engine: ^5.2.0
 
 dev_dependencies:
   flutter_test:

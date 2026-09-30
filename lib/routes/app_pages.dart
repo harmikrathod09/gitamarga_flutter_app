@@ -5,14 +5,15 @@ import '../modules/home/home_controller.dart';
 import '../modules/gita/gita_controller.dart';
 import '../modules/gita/chapter_detail_screen.dart';
 import '../modules/gita/verse_detail_screen.dart';
-import '../modules/practice/quiz/quiz_controller.dart';
-import '../modules/practice/quiz/quiz_screen.dart';
-import '../modules/practice/memorize/memorize_controller.dart';
-import '../modules/practice/memorize/memorize_screen.dart';
-import '../modules/practice/apply_gita/apply_gita_screen.dart';
+
 import '../modules/explore/search/search_screen.dart';
 import '../modules/explore/favorites/favorites_screen.dart';
+import '../modules/explore/calendar/calendar_screen.dart';
+import '../modules/explore/streak/streak_screen.dart';
+import '../modules/explore/panchang/panchang_screen.dart';
 import '../modules/profile/settings/settings_screen.dart';
+import '../modules/profile/about/about_screen.dart';
+import '../modules/profile/about/developer_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -43,24 +44,7 @@ class AppPages {
         Get.lazyPut(() => GitaController(), fenix: true);
       }),
     ),
-    GetPage(
-      name: AppRoutes.quiz,
-      page: () => const QuizScreen(),
-      binding: BindingsBuilder(() {
-        Get.lazyPut(() => QuizController());
-      }),
-    ),
-    GetPage(
-      name: AppRoutes.memorize,
-      page: () => const MemorizeScreen(),
-      binding: BindingsBuilder(() {
-        Get.lazyPut(() => MemorizeController());
-      }),
-    ),
-    GetPage(
-      name: AppRoutes.applyGita,
-      page: () => const ApplyGitaScreen(),
-    ),
+
     GetPage(
       name: AppRoutes.search,
       page: () => const SearchScreen(),
@@ -70,8 +54,28 @@ class AppPages {
       page: () => const FavoritesScreen(),
     ),
     GetPage(
+      name: AppRoutes.calendar,
+      page: () => const CalendarScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.streak,
+      page: () => const StreakScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.panchang,
+      page: () => const PanchangScreen(),
+    ),
+    GetPage(
       name: AppRoutes.settings,
       page: () => const SettingsScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.about,
+      page: () => const AboutScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.developer,
+      page: () => const DeveloperScreen(),
     ),
   ];
 }

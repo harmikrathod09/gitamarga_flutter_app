@@ -170,7 +170,7 @@ class _SplashScreenState extends State<SplashScreen>
                 FadeTransition(
                   opacity: _taglineFade,
                   child: Text(
-                    'Read. Understand. Practice.',
+                    'Read. Understand.',
                     style: AppTextStyles.bodySmall(
                       color: AppColors.primary.withOpacity(0.8),
                     ),

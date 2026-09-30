@@ -18,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
     final versesRead = stats['versesRead'] as int? ?? 0;
     final chapters = stats['chaptersCompleted'] as int? ?? 0;
     final streak = stats['currentStreak'] as int? ?? 0;
-    final quizScore = (stats['quizScore'] as double? ?? 0);
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
@@ -132,12 +131,6 @@ class ProfileScreen extends StatelessWidget {
                     icon: '🔥',
                     isDark: isDark,
                   ),
-                  _StatCard(
-                    label: 'quiz_score'.tr,
-                    value: '${(quizScore * 100).toInt()}%',
-                    icon: '🧠',
-                    isDark: isDark,
-                  ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -162,22 +155,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icons.info_outline_rounded,
                 title: 'about'.tr,
                 subtitle: 'GitaMarga v1.0.0 — The Path of the Gita',
-                onTap: () {
-                  Get.dialog(
-                    AlertDialog(
-                      title: const Text('GitaMarga'),
-                      content: const Text(
-                        'GitaMarga — The Path of the Gita\n\nVersion 1.0.0\n\nData Source: Bhagavad Gita (vedicscriptures)\nTranslations: Swami Sivananda, Swami Ramsukhdas\n\nRead. Understand. Practice.',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: Get.back,
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: () => Get.toNamed(AppRoutes.about),
                 isDark: isDark,
               ),
               const SizedBox(height: 10),
@@ -237,7 +215,7 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(16),
@@ -248,19 +226,28 @@ class _StatCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(icon, style: const TextStyle(fontSize: 20)),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: AppTextStyles.headlineMedium(
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+          Text(icon, style: const TextStyle(fontSize: 18)),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: AppTextStyles.headlineMedium(
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              ),
             ),
           ),
-          Text(
-            label,
-            style: AppTextStyles.bodySmall(
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              label,
+              style: AppTextStyles.bodySmall(
+                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              ),
             ),
           ),
         ],

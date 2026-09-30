@@ -13,7 +13,7 @@ class AppTranslations extends Translations {
     // App
     'app_name': 'GitaMarga',
     'app_tagline': 'The Path of the Gita',
-    'app_subtitle': 'Read. Understand. Practice.',
+    'app_subtitle': 'Read. Understand.',
     'om': 'ॐ',
 
     // Navigation

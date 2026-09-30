@@ -108,7 +108,6 @@ class GitaRepository extends GetxService {
   Map<String, dynamic> getStats() {
     final progress = _storage.getReadingProgress();
     final streak = _storage.getStreak();
-    final quizScore = _storage.getAverageQuizScore();
 
     return {
       'versesRead': progress.readVerseIds.length,
@@ -116,7 +115,6 @@ class GitaRepository extends GetxService {
       'longestStreak': streak.longestStreak,
       'chaptersCompleted': _countCompletedChapters(),
       'overallProgress': progress.progressPercent,
-      'quizScore': quizScore,
     };
   }
 

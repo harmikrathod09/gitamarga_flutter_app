@@ -5,7 +5,6 @@ import '../models/chapter_model.dart';
 import '../models/slok_model.dart';
 import '../models/favorite_model.dart';
 import '../models/reading_progress_model.dart';
-import '../models/quiz_model.dart';
 import '../../core/constants/app_constants.dart';
 
 class StorageService extends GetxService {
@@ -18,7 +17,7 @@ class StorageService extends GetxService {
 
   // ─── Language & Theme ────────────────────────────────────────────────────────
 
-  String getLanguage() => _prefs.getString(AppConstants.keyLanguage) ?? AppConstants.langEnglish;
+  String getLanguage() => _prefs.getString(AppConstants.keyLanguage) ?? AppConstants.langSanskrit;
   Future<void> setLanguage(String lang) => _prefs.setString(AppConstants.keyLanguage, lang);
 
   String getTheme() => _prefs.getString(AppConstants.keyTheme) ?? AppConstants.themeSystem;
@@ -126,26 +125,6 @@ class StorageService extends GetxService {
     await _prefs.setString(AppConstants.keyStreak, jsonEncode(newStreak.toJson()));
   }
 
-  // ─── Quiz History ─────────────────────────────────────────────────────────────
-
-  List<QuizResult> getQuizHistory() {
-    final raw = _prefs.getStringList(AppConstants.keyQuizHistory) ?? [];
-    return raw.map((s) => QuizResult.fromJson(jsonDecode(s))).toList();
-  }
-
-  Future<void> addQuizResult(QuizResult result) async {
-    final history = getQuizHistory();
-    history.insert(0, result);
-    final raw = history.take(20).map((r) => jsonEncode(r.toJson())).toList();
-    await _prefs.setStringList(AppConstants.keyQuizHistory, raw);
-  }
-
-  double getAverageQuizScore() {
-    final history = getQuizHistory();
-    if (history.isEmpty) return 0;
-    final total = history.fold(0.0, (sum, r) => sum + r.percentage);
-    return total / history.length;
-  }
 
   // ─── Chapter-level Progress ───────────────────────────────────────────────────
 
@@ -221,7 +200,6 @@ class StorageService extends GetxService {
     await _prefs.remove(AppConstants.keyReadingProgress);
     await _prefs.remove(AppConstants.keyStreak);
     await _prefs.remove(AppConstants.keyFavorites);
-    await _prefs.remove(AppConstants.keyQuizHistory);
   }
 
   // ─── Onboarding ───────────────────────────────────────────────────────────────

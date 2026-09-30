@@ -81,15 +81,20 @@ class ExploreScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               _ExploreTile(
+                icon: Icons.brightness_3_rounded,
+                color: Colors.deepPurple,
+                title: 'Hindu Calendar',
+                subtitle: 'Daily Tithi & Panchang',
+                onTap: () => Get.toNamed(AppRoutes.panchang),
+                isDark: isDark,
+              ),
+              const SizedBox(height: 10),
+              _ExploreTile(
                 icon: Icons.calendar_month_rounded,
                 color: AppColors.primary,
                 title: 'calendar'.tr,
                 subtitle: 'Daily shloka history',
-                onTap: () {
-                  Get.snackbar('', 'Calendar coming soon!',
-                      snackPosition: SnackPosition.BOTTOM,
-                      margin: const EdgeInsets.all(16));
-                },
+                onTap: () => Get.toNamed(AppRoutes.calendar),
                 isDark: isDark,
               ),
               const SizedBox(height: 10),
@@ -98,16 +103,92 @@ class ExploreScreen extends StatelessWidget {
                 color: AppColors.streakFire,
                 title: 'wisdom_streak'.tr,
                 subtitle: 'Your daily practice record',
-                onTap: () {
-                  Get.snackbar('', 'Streak history coming soon!',
-                      snackPosition: SnackPosition.BOTTOM,
-                      margin: const EdgeInsets.all(16));
-                },
+                onTap: () => Get.toNamed(AppRoutes.streak),
                 isDark: isDark,
               ),
+              // Articles / Featured Content
+              const SizedBox(height: 32),
+              Text(
+                'Featured Articles',
+                style: AppTextStyles.titleLarge(
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildArticleCard(
+                'The Essence of Karma Yoga',
+                'Understanding selfless action in the modern world.',
+                '5 min read',
+                Icons.self_improvement_rounded,
+                isDark,
+              ),
+              const SizedBox(height: 12),
+              _buildArticleCard(
+                'Decoding the Panchang',
+                'How the Hindu Calendar aligns with lunar cycles.',
+                '8 min read',
+                Icons.brightness_2_rounded,
+                isDark,
+              ),
+              const SizedBox(height: 32),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildArticleCard(String title, String subtitle, String readingTime, IconData icon, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? AppColors.dividerDark : AppColors.dividerLight,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: AppColors.primary, size: 28),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.titleMedium(
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.bodySmall(
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  readingTime,
+                  style: AppTextStyles.labelSmall(
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
