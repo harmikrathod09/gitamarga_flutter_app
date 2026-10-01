@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:get/get.dart';
 import 'core/theme/app_theme.dart';
 import 'core/localization/app_translations.dart';
@@ -12,6 +13,7 @@ import 'routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting();
 
   // System UI
   SystemChrome.setPreferredOrientations([

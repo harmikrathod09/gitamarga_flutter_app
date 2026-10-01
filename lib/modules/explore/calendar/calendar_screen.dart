@@ -5,7 +5,9 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../data/services/storage_service.dart';
 import 'package:intl/intl.dart';
 import 'package:tithi_engine/tithi_engine.dart';
+import 'day_details_sheet.dart';
 import 'package:tithi_engine/data/all.dart';
+import '../../../utils/panchang_translator.dart';
 
 class CalendarScreen extends StatelessWidget {
   const CalendarScreen({super.key});
@@ -25,7 +27,13 @@ class CalendarScreen extends StatelessWidget {
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
     final firstWeekday = firstDayOfMonth.weekday; // 1 = Monday, 7 = Sunday
     
-    final weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    // Get localized short weekdays, starting from Monday
+    final List<String> weekDays = [];
+    final locale = Get.locale?.languageCode ?? 'en';
+    for (int i = 1; i <= 7; i++) {
+      // 2024-01-01 was a Monday
+      weekDays.add(DateFormat('EEE', locale).format(DateTime(2024, 1, i)).toUpperCase());
+    }
 
     final panchang = Panchang([registerAllCities]);
     
@@ -33,8 +41,8 @@ class CalendarScreen extends StatelessWidget {
     String hinduDateDisplay = 'Loading Hindu Calendar...';
     try {
       final info = panchang.tithiOnDate(DateTime.utc(now.year, now.month, now.day), City.ujjain);
-      hinduDateDisplay = info.displayName;
-      hinduMonth = info.displayName.split(' ').first;
+      hinduDateDisplay = PanchangTranslator.translate(info.displayName);
+      hinduMonth = PanchangTranslator.translate(info.displayName.split(' ').first);
     } catch (e) {
       hinduDateDisplay = 'Hindu Calendar not available';
     }
@@ -56,8 +64,8 @@ class CalendarScreen extends StatelessWidget {
           children: [
             Text(
               hinduMonth.isNotEmpty 
-                  ? '$hinduMonth (${DateFormat('MMMM yyyy').format(now)})' 
-                  : DateFormat('MMMM yyyy').format(now),
+                  ? '$hinduMonth (${DateFormat('MMMM yyyy', Get.locale?.languageCode).format(now)})' 
+                  : DateFormat('MMMM yyyy', Get.locale?.languageCode).format(now),
               style: AppTextStyles.displayMedium(
                 color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
@@ -134,70 +142,87 @@ class CalendarScreen extends StatelessWidget {
                 final isFuture = date.isAfter(now);
 
                 String dayTithi = '';
+                String fullTithiName = '';
                 try {
                   final info = panchang.tithiOnDate(DateTime.utc(date.year, date.month, date.day), City.ujjain);
+                  fullTithiName = info.displayName;
                   final parts = info.displayName.split(' ');
-                  dayTithi = parts.isNotEmpty ? parts.last : '';
+                  dayTithi = parts.isNotEmpty ? PanchangTranslator.translate(parts.last) : '';
                 } catch (_) {}
 
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  decoration: BoxDecoration(
-                    color: isActive 
-                        ? AppColors.primary 
-                        : (isDark ? AppColors.cardDark : AppColors.cardLight),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: isToday 
-                          ? AppColors.gold 
-                          : (isActive 
-                              ? AppColors.primary 
-                              : (isDark ? AppColors.dividerDark : AppColors.dividerLight)),
-                      width: isToday ? 2 : 1,
-                    ),
-                    boxShadow: isActive ? [
-                      BoxShadow(
-                        color: AppColors.primary.withOpacity(0.4),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      )
-                    ] : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '$dayNum',
-                        style: AppTextStyles.bodyMedium(
-                          color: isActive 
-                              ? Colors.white 
-                              : (isFuture 
-                                  ? (isDark ? Colors.white24 : Colors.black26)
-                                  : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-                        ).copyWith(
-                          fontWeight: isActive || isToday ? FontWeight.bold : FontWeight.normal,
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    final tName = dayTithi.isNotEmpty ? fullTithiName : 'Unknown Tithi';
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => DayDetailsSheet(
+                        date: date,
+                        tithiName: tName,
+                        isDark: isDark,
                       ),
-                      if (dayTithi.isNotEmpty) ...[
-                        const SizedBox(height: 2),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Text(
-                            dayTithi,
-                            style: AppTextStyles.labelSmall(
-                              color: isActive 
-                                  ? Colors.white 
-                                  : (isDark ? AppColors.primary.withOpacity(0.9) : AppColors.primary),
-                            ).copyWith(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.visible,
+                    );
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      color: isActive 
+                          ? AppColors.primary 
+                          : (isDark ? AppColors.cardDark : AppColors.cardLight),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isToday 
+                            ? AppColors.gold 
+                            : (isActive 
+                                ? AppColors.primary 
+                                : (isDark ? AppColors.dividerDark : AppColors.dividerLight)),
+                        width: isToday ? 2 : 1,
+                      ),
+                      boxShadow: isActive ? [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.4),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        )
+                      ] : null,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$dayNum',
+                          style: AppTextStyles.bodyMedium(
+                            color: isActive 
+                                ? Colors.white 
+                                : (isFuture 
+                                    ? (isDark ? Colors.white24 : Colors.black26)
+                                    : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
+                          ).copyWith(
+                            fontWeight: isActive || isToday ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
+                        if (dayTithi.isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                            child: Text(
+                              dayTithi,
+                              style: AppTextStyles.labelSmall(
+                                color: isActive 
+                                    ? Colors.white 
+                                    : (isDark ? AppColors.primary.withOpacity(0.9) : AppColors.primary),
+                              ).copyWith(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 );
               },

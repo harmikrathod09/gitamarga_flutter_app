@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../data/services/storage_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../routes/app_routes.dart';
@@ -76,7 +77,12 @@ class _SplashScreenState extends State<SplashScreen>
   void _navigateAfterDelay() {
     Future.delayed(const Duration(milliseconds: 3200), () {
       if (mounted) {
-        Get.offAllNamed(AppRoutes.home);
+        final storage = Get.find<StorageService>();
+        if (storage.isOnboardingDone()) {
+          Get.offAllNamed(AppRoutes.home);
+        } else {
+          Get.offAllNamed(AppRoutes.languageSelection);
+        }
       }
     });
   }

@@ -1,5 +1,6 @@
 abstract class AppRoutes {
   static const splash = '/';
+  static const languageSelection = '/language_selection';
   static const home = '/home';
   static const gita = '/gita';
   static const chapter = '/chapter';

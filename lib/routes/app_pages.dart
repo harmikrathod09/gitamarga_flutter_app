@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../modules/splash/splash_screen.dart';
+import '../modules/onboarding/language_selection_screen.dart';
 import '../modules/shell/shell_screen.dart';
 import '../modules/home/home_controller.dart';
 import '../modules/gita/gita_controller.dart';
@@ -21,6 +22,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.splash,
       page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.languageSelection,
+      page: () => const LanguageSelectionScreen(),
     ),
     GetPage(
       name: AppRoutes.home,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperScreen extends StatelessWidget {
   const DeveloperScreen({super.key});
@@ -116,7 +117,18 @@ class DeveloperScreen extends StatelessWidget {
 
   Widget _buildSocialButton(IconData icon, Color color, String label, String url, bool isDark) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        final uri = Uri.parse(url);
+        try {
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri, mode: LaunchMode.externalApplication);
+          } else {
+            Get.snackbar('Error', 'Could not open the link');
+          }
+        } catch (e) {
+          Get.snackbar('Error', 'Could not open the link');
+        }
+      },
       child: Container(
         width: 70,
         height: 70,

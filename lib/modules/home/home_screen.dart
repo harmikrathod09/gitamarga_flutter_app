@@ -7,6 +7,8 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/widgets/loading_shimmer.dart';
 import '../../routes/app_routes.dart';
+import '../../core/constants/app_constants.dart';
+import '../../data/services/storage_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,6 +57,17 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      
+                      // Theme Toggle
+                      IconButton(
+                        onPressed: () => _toggleTheme(context),
+                        icon: Icon(
+                          isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                          color: isDark ? AppColors.gold : AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      
                       // Om badge
                       Container(
                         width: 44,
@@ -156,6 +169,15 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _toggleTheme(BuildContext context) async {
+    final storage = Get.find<StorageService>();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final newTheme = isDark ? AppConstants.themeLight : AppConstants.themeDark;
+    
+    await storage.setTheme(newTheme);
+    Get.changeThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
   }
 
   Widget _buildDailyShlokaFallback(BuildContext context, bool isDark) {

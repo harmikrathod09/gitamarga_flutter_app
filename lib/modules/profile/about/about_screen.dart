@@ -67,37 +67,41 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'GitaMarga',
+              'app_name'.tr,
               style: AppTextStyles.displayMedium(
                 color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'The Path of the Gita',
+              'app_tagline'.tr,
               style: AppTextStyles.titleMedium(
                 color: AppColors.primary,
               ).copyWith(letterSpacing: 2),
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 32),
             
+            // Purpose Card
+            _buildPurposeCard(isDark),
+            const SizedBox(height: 32),
+
             // Info Cards
             _buildInfoCard(
-              'Version',
+              'version'.tr,
               '1.0.0',
               Icons.info_outline_rounded,
               isDark,
             ),
             const SizedBox(height: 16),
             _buildInfoCard(
-              'Data Source',
+              'data_source'.tr,
               'Bhagavad Gita (vedicscriptures)',
               Icons.dataset_rounded,
               isDark,
             ),
             const SizedBox(height: 16),
             _buildInfoCard(
-              'Translations',
+              'translations_title'.tr,
               'Swami Sivananda\nSwami Ramsukhdas',
               Icons.translate_rounded,
               isDark,
@@ -126,7 +130,7 @@ class AboutScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Meet the Developer',
+                            'meet_developer'.tr,
                             style: AppTextStyles.titleMedium(
                               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                             ),
@@ -153,7 +157,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 48),
             
             Text(
-              'Read. Understand.',
+              'app_subtitle'.tr,
               style: AppTextStyles.bodyMedium(
                 color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
               ),
@@ -161,6 +165,46 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPurposeCard(bool isDark) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(isDark ? 0.15 : 0.05),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.primary.withOpacity(0.3),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.menu_book_rounded, color: AppColors.primary, size: 24),
+              const SizedBox(width: 12),
+              Text(
+                'purpose_title'.tr,
+                style: AppTextStyles.titleLarge(
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'purpose_desc'.tr,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyMedium(
+              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            ).copyWith(height: 1.6),
+          ),
+        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:tithi_engine/tithi_engine.dart';
 import 'package:tithi_engine/data/all.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../utils/panchang_translator.dart';
 
 class PanchangScreen extends StatefulWidget {
   const PanchangScreen({super.key});
@@ -54,7 +55,7 @@ class _PanchangScreenState extends State<PanchangScreen> {
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(
-          'Hindu Calendar',
+          'calendar'.tr,
           style: AppTextStyles.titleLarge(
             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
           ),
@@ -137,6 +138,7 @@ class _PanchangScreenState extends State<PanchangScreen> {
                   } catch (_) {}
 
                   final moonIcon = _getMoonIcon(tithiName);
+                  final translatedTithi = PanchangTranslator.translate(tithiName);
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -150,7 +152,7 @@ class _PanchangScreenState extends State<PanchangScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                DateFormat('EEE').format(date).toUpperCase(),
+                                DateFormat('EEE', Get.locale?.languageCode).format(date).toUpperCase(),
                                 style: AppTextStyles.labelSmall(
                                   color: isToday 
                                       ? AppColors.primary 
@@ -215,9 +217,9 @@ class _PanchangScreenState extends State<PanchangScreen> {
                                             color: AppColors.primary,
                                             borderRadius: BorderRadius.circular(6),
                                           ),
-                                          child: const Text(
-                                            'TODAY',
-                                            style: TextStyle(
+                                          child: Text(
+                                            PanchangTranslator.translate('TODAY').toUpperCase(),
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 9,
                                               fontWeight: FontWeight.bold,
@@ -226,7 +228,7 @@ class _PanchangScreenState extends State<PanchangScreen> {
                                           ),
                                         ),
                                       Text(
-                                        tithiName,
+                                        translatedTithi,
                                         style: AppTextStyles.titleMedium(
                                           color: isToday 
                                               ? AppColors.primary 
@@ -237,7 +239,7 @@ class _PanchangScreenState extends State<PanchangScreen> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        DateFormat('MMMM yyyy').format(date),
+                                        DateFormat('MMMM yyyy', Get.locale?.languageCode).format(date),
                                         style: AppTextStyles.bodySmall(
                                           color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                                         ),

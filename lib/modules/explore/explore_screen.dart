@@ -30,7 +30,7 @@ class ExploreScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Discover, search, and track your journey',
+                'explore_subtitle'.tr,
                 style: AppTextStyles.bodyMedium(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                 ),
@@ -75,7 +75,7 @@ class ExploreScreen extends StatelessWidget {
                 icon: Icons.favorite_rounded,
                 color: Colors.red,
                 title: 'favorites'.tr,
-                subtitle: 'Shlokas you\'ve saved',
+                subtitle: 'favorites_subtitle'.tr,
                 onTap: () => Get.toNamed(AppRoutes.favorites),
                 isDark: isDark,
               ),
@@ -83,8 +83,8 @@ class ExploreScreen extends StatelessWidget {
               _ExploreTile(
                 icon: Icons.brightness_3_rounded,
                 color: Colors.deepPurple,
-                title: 'Hindu Calendar',
-                subtitle: 'Daily Tithi & Panchang',
+                title: 'panchang_title'.tr,
+                subtitle: 'panchang_subtitle'.tr,
                 onTap: () => Get.toNamed(AppRoutes.panchang),
                 isDark: isDark,
               ),
@@ -93,7 +93,7 @@ class ExploreScreen extends StatelessWidget {
                 icon: Icons.calendar_month_rounded,
                 color: AppColors.primary,
                 title: 'calendar'.tr,
-                subtitle: 'Daily shloka history',
+                subtitle: 'calendar_subtitle'.tr,
                 onTap: () => Get.toNamed(AppRoutes.calendar),
                 isDark: isDark,
               ),
@@ -102,14 +102,14 @@ class ExploreScreen extends StatelessWidget {
                 icon: Icons.local_fire_department_rounded,
                 color: AppColors.streakFire,
                 title: 'wisdom_streak'.tr,
-                subtitle: 'Your daily practice record',
+                subtitle: 'streak_subtitle'.tr,
                 onTap: () => Get.toNamed(AppRoutes.streak),
                 isDark: isDark,
               ),
               // Articles / Featured Content
               const SizedBox(height: 32),
               Text(
-                'Featured Articles',
+                'featured_articles'.tr,
                 style: AppTextStyles.titleLarge(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                 ),
